@@ -1,0 +1,178 @@
+[
+  {
+    "id": "agro_frota12_tab",
+    "type": "tab",
+    "label": "AgroSense - 12 maquinas",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "agro_frota12_tick",
+    "type": "inject",
+    "z": "agro_frota12_tab",
+    "name": "A cada 5 segundos",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "tick",
+    "payload": "",
+    "payloadType": "date",
+    "x": 190,
+    "y": 80,
+    "wires": [
+      [
+        "agro_frota12_func"
+      ]
+    ]
+  },
+  {
+    "id": "agro_frota12_start",
+    "type": "inject",
+    "z": "agro_frota12_tab",
+    "name": "INICIAR 12 maquinas",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "iniciar",
+    "payload": "",
+    "payloadType": "date",
+    "x": 190,
+    "y": 140,
+    "wires": [
+      [
+        "agro_frota12_func"
+      ]
+    ]
+  },
+  {
+    "id": "agro_frota12_stop",
+    "type": "inject",
+    "z": "agro_frota12_tab",
+    "name": "PAUSAR 12 maquinas",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "pausar",
+    "payload": "",
+    "payloadType": "date",
+    "x": 190,
+    "y": 200,
+    "wires": [
+      [
+        "agro_frota12_func"
+      ]
+    ]
+  },
+  {
+    "id": "agro_frota12_func",
+    "type": "function",
+    "z": "agro_frota12_tab",
+    "name": "Simulador gradual - 12 maquinas",
+    "func": "const ids = [\"TRATOR-01\",\"TRATOR-02\",\"TRATOR-03\",\"SEMEADORA-01\",\"SEMEADORA-02\",\"SEMEADORA-03\",\"PLANTADEIRA-01\",\"PLANTADEIRA-02\",\"PLANTADEIRA-03\",\"COLHEITA-01\",\"COLHEITA-02\",\"COLHEITA-03\"];\nif (msg.topic === 'iniciar') {\n    context.set('executando', true);\n    context.set('ultimoInstante', Date.now());\n    node.status({fill:'green',shape:'dot',text:'12 maquinas: a cada 5 s'});\n    return null;\n}\nif (msg.topic === 'pausar') {\n    context.set('executando', false);\n    node.status({fill:'grey',shape:'ring',text:'pausado'});\n    return null;\n}\nif (context.get('executando') !== true) return null;\nconst agora = Date.now();\nconst anterior = context.get('ultimoInstante') || agora;\nconst dt = Math.max(0, Math.min(10, (agora - anterior) / 1000));\ncontext.set('ultimoInstante', agora);\nlet estados = context.get('maquinas') || {};\nconst limitar = (v,a,b) => Math.max(a,Math.min(b,v));\nconst arred = v => Math.round(v*1000)/1000;\nconst variar = (v,alvo,taxa,ruido) => v + limitar((alvo-v)*0.12 + (Math.random()-0.5)*ruido, -taxa*dt, taxa*dt);\nconst sequencia = (context.get('sequencia') || 0) + 1;\ncontext.set('sequencia', sequencia);\nconst lote = msg._msgid || (agora.toString(36) + '-' + Math.random().toString(36).slice(2));\nconst mensagens = ids.map((id,i) => {\n    let e = estados[id];\n    if (!e) e = {ar:299+(i%3)*0.4,processo:310+(i%3)*0.4,carga:0.4+(i%3)*0.04,rpm:1550+(i%3)*20,torque:40,desgaste:20+i*7,tempo:0};\n    e.tempo += dt;\n    const cargaAlvo = 0.45 + 0.1*Math.sin(e.tempo/90+i);\n    e.carga = limitar(variar(e.carga,cargaAlvo,0.006,0.015),0.25,0.65);\n    e.ar = limitar(variar(e.ar,299.5+0.6*Math.sin(e.tempo/300+i/3),0.01,0.03),297,303);\n    e.processo = limitar(variar(e.processo,e.ar+10.5+e.carga,0.03,0.04),e.ar+9,e.ar+13);\n    e.rpm = limitar(variar(e.rpm,1650-200*e.carga,8,12),1400,1750);\n    e.torque = limitar(variar(e.torque,30+25*e.carga,0.4,0.5),30,50);\n    e.desgaste = Math.min(240,e.desgaste+dt/60);\n    estados[id] = e;\n    return {topic:'planta/maquina1/dados',payload:{messageId:lote+'-'+sequencia+'-'+id,machineId:id,timestamp:new Date(agora).toISOString(),type:'M',airTemperature:arred(e.ar),processTemperature:arred(e.processo),rotationalSpeed:arred(e.rpm),torque:arred(e.torque),toolWear:arred(e.desgaste)}};\n});\ncontext.set('maquinas',estados);\nreturn [mensagens];",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "context.set('executando', false); context.set('ultimoInstante', Date.now()); node.status({fill:'grey',shape:'ring',text:'pausado: clique INICIAR'});",
+    "finalize": "",
+    "libs": [],
+    "x": 500,
+    "y": 140,
+    "wires": [
+      [
+        "agro_frota12_mqtt",
+        "agro_frota12_debug"
+      ]
+    ]
+  },
+  {
+    "id": "agro_frota12_mqtt",
+    "type": "mqtt out",
+    "z": "agro_frota12_tab",
+    "name": "Enviar ao AgroSense",
+    "topic": "planta/maquina1/dados",
+    "qos": "0",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "agro_frota12_broker",
+    "x": 810,
+    "y": 100,
+    "wires": []
+  },
+  {
+    "id": "agro_frota12_debug",
+    "type": "debug",
+    "z": "agro_frota12_tab",
+    "name": "Leituras das 12 maquinas",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 820,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "agro_frota12_broker",
+    "type": "mqtt-broker",
+    "name": "Mosquitto local AgroSense",
+    "broker": "127.0.0.1",
+    "port": "1883",
+    "clientid": "",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": "",
+    "willMsg": {}
+  }
+]

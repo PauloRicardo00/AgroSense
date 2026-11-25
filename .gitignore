@@ -1,0 +1,13 @@
+**/target/
+**/node_modules/
+.env
+.env.*
+!.env.example
+*.backup
+*.dump
+*_cred.json
+*.log
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

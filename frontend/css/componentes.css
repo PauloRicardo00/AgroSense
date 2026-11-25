@@ -1,0 +1,229 @@
+/* Acabamento das superfícies, sem mudar grid, tamanho ou posição dos blocos. */
+[v-cloak] { display: none !important; }
+.app-startup[hidden] { display: none; }
+.app-startup { max-width: 34rem; margin: 4rem auto; padding: 1.25rem; }
+.app-startup .btn { margin-top: 1rem; }
+
+.app-shell :is(.panel, .kpi, .machine-group, .settings-paper, .report-sheet, .order-card, .home-shortcut, .home-feature, .viewer-card) {
+  border-radius: 0.5rem;
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.app-shell .topbar h1 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.app-shell :is(.panel h2, .group-head h2, .settings-paper h2, .order-card h2, .report-sheet h2) {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.app-shell :is(.subtitle, .panel-sub, .settings-description) {
+  color: var(--muted);
+  line-height: 1.625;
+}
+
+.app-shell :is(.btn, .settings-button, .viewer-tools button, .icon-button, .refresh-action, .nav-item, .settings-nav-button, .tele-chips button) {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.app-shell :is(.btn, .settings-button, .viewer-tools button) {
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+.app-shell :is(.btn.ghost, .settings-button-secondary, .viewer-tools button, .icon-button) {
+  background-color: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.app-shell :is(.btn.ghost, .settings-button-secondary, .viewer-tools button, .icon-button):hover:not(:disabled) {
+  background-color: var(--green-bg-hover);
+  border-color: var(--forest);
+}
+
+.app-shell :is(.btn.primary, .settings-button-primary):hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.app-shell :is(button,input,select,textarea,a,[tabindex="0"]):focus-visible {
+  outline: 2px solid var(--forest); outline-offset: 3px;
+}
+
+.app-shell :is(button, .btn):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.app-shell :is(.machine-filters input, .machine-filters select, .field input, .field select, .order-form select, .order-form textarea, .order-card textarea, .settings-select, .ag-select-trigger) {
+  border-radius: 0.5rem;
+  border-color: var(--line);
+  background-color: var(--surface);
+  color: var(--ink);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.app-shell :is(input,textarea)::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.app-shell .machine-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.app-shell .machine-table th {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.app-shell .machine-table tbody td {
+  border-color: var(--line);
+}
+
+.app-shell .machine-table .machine-id {
+  font-weight: 700;
+  color: var(--forest);
+}
+
+.app-shell :is(.status, .status-pill, .severity) {
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+.app-shell :is(.profile-menu, .notification-panel, .ag-select-menu, .confirm-dialog, .toast) {
+  border-radius: 0.75rem;
+  border-color: var(--line);
+  box-shadow: 0 12px 32px rgba(16, 37, 26, 0.12);
+}
+
+.app-shell .home-shortcut:hover {
+  border-color: var(--forest);
+}
+
+.app-shell .settings-note {
+  border-radius: 0.5rem;
+  color: var(--muted);
+}
+
+.app-shell .settings-actions {
+  border-color: var(--line);
+}
+
+.app-shell .report-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.app-shell .report-controls {
+  border-radius: 0.75rem;
+  border-color: var(--line);
+}
+
+/* Direção clean: superfícies planas e contraste reservado às ações e estados. */
+.app-shell .machine-list > .machine-filters {
+  box-shadow: none;
+  border-radius: 0.5rem;
+}
+
+.app-shell .home-shortcut {
+  box-shadow: none;
+}
+
+.app-shell .group-head {
+  background-color: var(--surface);
+}
+
+.app-shell .order-card { border-left-width:1px; }
+
+.app-shell .machine-table thead th {
+  background-color: var(--neutral);
+}
+
+.app-shell .nav-item:not(.active):hover {
+  background-color: var(--neutral);
+}
+
+.app-shell .report-controls {
+  border-radius: 0.5rem;
+  box-shadow: none;
+}
+
+/* Login e recuperação: preservar o ajuste à altura e o comportamento do formulário. */
+.ag-login .ag-shell {
+  box-shadow: 0 12px 32px rgba(16, 37, 26, 0.12);
+}
+
+.ag-login .ag-title {
+  letter-spacing: -0.025em;
+}
+
+.ag-login .ag-field input {
+  border-radius: 0.5rem;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.ag-login .ag-btn {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.ag-login .ag-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.ag-login :is(button,a,input):focus-visible { outline:2px solid #315b49; outline-offset:3px; }
+@media (prefers-reduced-motion:reduce) {
+  .app-shell :is(button,a,input,select,textarea), .ag-login :is(button,a,input) { transition:none!important; }
+}
+@media print {
+  .app-shell :is(.panel, .report-sheet, .report-controls) { box-shadow:none; }
+}
+
+.cad-group, .os-footer {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.cad-group summary, .order-card summary {
+  color: var(--ink);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0;
+}
+.os-fields {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+}
+.os-record { display: grid; gap: 14px; }
+.os-record p, .order-card li { white-space: pre-line; overflow-wrap: anywhere; }
+.os-footer, .os-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.os-heading { justify-content: space-between; }
+.os-heading h2 { margin: 0; }
+.os-footer { justify-content: flex-end; }
+.os-stage { color: var(--ink); background: var(--neutral); border-radius: 6px; padding: 5px 10px; font-size: 13px; }
+.os-fields select, .os-record textarea { width: 100%; min-width: 0; }
+.os-trigger { display: inline-flex; align-items: center; gap: 6px; }
+@media (max-width: 540px) {
+  .os-footer .btn { width: 100%; justify-content: center; }
+}
+
+.os-priority { border-radius: 6px; padding: 5px 10px; font-size: 13px; }
+.os-priority.BAIXA { background: #e6ecf0; color: #263e50; }
+.os-priority.MEDIA { background: #fff2b3; color: #664800; }
+.os-priority.ALTA { background: #ffe1c0; color: #813700; }
+.os-priority.CRITICA { background: #a52b31; color: #fff; }

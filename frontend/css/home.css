@@ -1,0 +1,134 @@
+/* AgroSense — Início. Estilos exclusivos da página inicial (remover o <link> volta ao estado anterior). */
+
+/* ---------- Cabeçalho discreto ---------- */
+.app-shell .home-topbar {
+  align-items: center;
+  min-height: 49px;
+  margin-bottom: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.home-topbar .top-actions { margin-left: auto; }
+.home-topbar .sim-detail { display: none; }
+
+.home-view {
+  --home-radius: 14px;
+  --home-ring: #C7D2CA;
+}
+:where(.home-view) :is(h1, h2, p) { margin: 0; }
+
+/* ---------- Boas-vindas ---------- */
+.home-hero { padding-top: clamp(36px, 5vw, 64px); }
+.home-title {
+  font-size: clamp(30px, 2.7vw, 38px);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -.03em;
+  font-variant-numeric: normal; /* o hífen de “Bem-vindo” não deve ficar tabular */
+  color: var(--ink);
+}
+.home-lead {
+  margin-top: 20px;
+  max-width: 92ch;
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.home-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font: inherit;
+  font-size: var(--fs-md);
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease;
+}
+.home-btn svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.home-btn-primary { background: var(--forest); border-color: var(--forest); color: #fff; }
+.home-btn-primary:hover { background: #27493A; border-color: #27493A; }
+.home-btn:focus-visible, .home-shortcut:focus-visible,
+/* ---------- Acessos rápidos ---------- */
+.home-shortcuts { --bs-gutter-x: 14px; --bs-gutter-y: 14px; margin-top: clamp(32px, 3.8vw, 48px); }
+.home-shortcut {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  min-height: 92px;
+  padding: 20px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--home-radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color .16s ease, border-color .16s ease;
+}
+.home-shortcut:hover { background: #FBFCFB; border-color: var(--home-ring); }
+.home-shortcut-icon { flex: none; display: inline-flex; color: var(--ink-2); transition: color .16s ease; }
+.home-shortcut:hover .home-shortcut-icon { color: var(--forest); }
+.home-shortcut-icon svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.home-shortcut-text { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.home-shortcut-text b { font-size: 16px; font-weight: 500; line-height: 1.25; }
+.home-shortcut-text small { font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+
+/* ---------- Bloco institucional ---------- */
+.home-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 14px;
+  margin-top: clamp(28px, 3.4vw, 44px);
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+}
+.home-feature-copy { align-self: center; padding: 22px 20px 22px 24px; }
+.home-feature-copy h2 {
+  max-width: 24ch;
+  font-size: clamp(22px, 2.1vw, 28px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+.home-feature-copy p {
+  max-width: 46ch;
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.home-feature-brand {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 24px;
+  border-radius: 12px;
+  background: #F4F6F3;
+}
+.home-feature-brand img { display: block; width: min(100%, 320px); height: auto; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 991.98px) {
+  .home-feature { grid-template-columns: minmax(0, 1fr); }
+  .home-feature-copy { padding: 14px 10px 6px; }
+  .home-feature-brand { min-height: 160px; }
+}
+@media (max-width: 575.98px) {
+  .home-hero { padding-top: 28px; }
+  .home-actions { flex-direction: column; }
+  .home-btn { width: 100%; }
+  .home-shortcut { min-height: 80px; padding: 16px 18px; gap: 16px; }
+  .home-feature-copy h2 { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-btn, .home-shortcut, .home-shortcut-icon { transition: none; }
+}
